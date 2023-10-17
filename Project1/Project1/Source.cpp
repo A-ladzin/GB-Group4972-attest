@@ -8,6 +8,19 @@ using namespace std;
 int main()
 {
 
+
+				// Uncomment to use Manual Input
+	//ofstream out;
+	//cout << "Enter an array of comma-separated elements" << endl;
+	//out.open("data.txt");
+	//char data[1000];
+	//cin.getline(data, 1000);
+	//out << data;
+	//out.close();
+
+	
+
+
 	ifstream in;
 	in.open("data.txt");
 
@@ -41,6 +54,7 @@ int main()
 			size++;
 
 			int* temp_w_sizes = w_sizes;
+			
 
 			w_sizes = new int[size];
 
@@ -48,10 +62,13 @@ int main()
 			{
 				w_sizes[i] = temp_w_sizes[i];
 			}
+			delete[] temp_w_sizes;
 			w_sizes[size - 1] = n;
 
 
 			char** temp_s = s;
+			
+
 
 
 			s = new char* [size];
@@ -65,6 +82,12 @@ int main()
 				}
 			}
 
+			for (int i = 0; i < size - 1; i++)
+			{
+				delete[]temp_s[i];
+			}
+			delete[] temp_s;
+
 
 			s[size - 1] = new char[n];
 			for (int j = 0; j < n; j++)
@@ -75,10 +98,14 @@ int main()
 		}
 
 	}
+	in.close();
+
+
 	int result_size = 0;
 	char** result = new char*[result_size];
 	int* result_w_sizes = new int[result_size];
 
+	cout << "Data:\n";
 	for (int i = 0; i < size; ++i)
 	{
 		cout << '"';
@@ -101,31 +128,26 @@ int main()
 			}
 			result_w_sizes[result_size - 1] = w_sizes[i];
 
+			delete[] temp_result_w_sizes;
+
 
 
 
 			char** temp_result = result;
 			result = new char* [result_size];
-			for (int k = 0; k < result_size - 1; k++)
+			for (int k = 0; k < result_size-1; k++)
 			{
-				result[k] = new char[w_sizes[i]];
-				for (int l = 0; l < w_sizes[i]; l++)
-				{
-					result[k][l] = temp_result[k][l];
-				}
+				result[k] = temp_result[k];
 			}
-			result[result_size - 1] = new char[w_sizes[i]];
-			for (int l = 0; l < w_sizes[i]; l++)
-			{
-				result[result_size-1][l] = s[i][l];
-			}
+			result[result_size - 1] = s[i];
 			
+			delete[] temp_result;
 		}
 
 		
 	}
 
-	cout << endl;
+	cout << "\nResult:\n";
 
 	for (int i = 0; i < result_size; ++i)
 	{
