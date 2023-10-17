@@ -48,6 +48,7 @@ int main()
 			}
 			*(w + n - 1) = ch;
 			ch = in.get();
+			delete[] temp;
 		}
 		if (n > 0)
 		{
